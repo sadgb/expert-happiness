@@ -5,9 +5,7 @@ class ApplicationController < ActionController::Base
 
   # @param [User] user
   def current_user=(user)
-    raise if user&.id.nil?
-
-    cookies.signed[:user_id] = user.id
+    cookies.signed[:user_id] = user&.id
   end
 
   def current_user

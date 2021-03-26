@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   get '/signup_page', to: 'users#signup_page', as: :signup_page
   post '/signup', to: 'users#signup', as: :signup
+
+  delete '/signout', to: 'users#signout', as: :signout
 end

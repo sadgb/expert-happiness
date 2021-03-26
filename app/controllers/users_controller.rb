@@ -22,6 +22,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def signout
+    self.current_user=nil
+    redirect_to root_path
+  end
+
   # POST /users or /users.json
   def signup
     @user = ::UserSignUpService.call(
