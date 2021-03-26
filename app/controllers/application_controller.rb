@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def current_user
+    # TODO
+  end
+
   def show_flash
     flash.now[:notice] = "Found the about page!" if request.path == '/pages/about'
   end

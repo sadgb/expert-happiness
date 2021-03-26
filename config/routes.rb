@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  resources :users
   root to: 'visitors#index'
 
-  match '/signin', to: 'users#signin', as: :signin, via: [:get, :post]
-  match '/signup', to: 'users#signup', as: :signup, via: [:get, :post]
+  get '/signin_page', to: 'users#signin_page', as: :signin_page
+  post '/signin', to: 'users#signin', as: :signin
+
+  get '/signup_page', to: 'users#signup_page', as: :signup_page
+  post '/signup', to: 'users#signup', as: :signup
 end
