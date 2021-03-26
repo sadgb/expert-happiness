@@ -20,6 +20,10 @@ class User
     !id.nil?
   end
 
+  def printable_gender
+    GENDERS.invert[@gender]
+  end
+
   def gender=(new_gender)
     @gender = new_gender.to_i
   end
