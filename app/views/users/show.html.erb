@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<% if @user.id == current_user&.id %>
+  <p> It's YOUR PAGE!</p>
+<% end %>
 <p>
   <strong>Name:</strong>
   <%= @user.name %>
@@ -20,10 +23,4 @@
   <%= @user.gender %>
 </p>
 
-<p>
-  <strong>Pwd:</strong>
-  <%= @user.pwd %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

@@ -7,6 +7,11 @@ class ValidateUserService
       user.errors << 'Invalid gender'
     end
 
+    email = user.email
+    if email.blank? || (email =~ URI::MailTo::EMAIL_REGEXP).nil?
+      user.errors << 'Email is invalid'
+    end
+
     name = user.name
     if name.blank? || name.length < 3 || name.length > 50
       user.errors << 'Name length should be between 3 and 50'

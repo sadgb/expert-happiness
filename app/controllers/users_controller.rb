@@ -8,7 +8,10 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    @user = Database::Users::Find.call(params[:id])
+    head 404 unless @user
+  end
 
   # GET /signin
   def signin
@@ -21,7 +24,8 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def signup
-    @user = ::UserSignInService.call(
+    @user = ::UserSignUpService.call(
+      params[:email],
       params[:name],
       params[:surname],
       params[:gender],
@@ -30,6 +34,8 @@ class UsersController < ApplicationController
     )
 
     if @user.persisted?
+      # запоминаем текущего юзера
+      self.current_user = @user
       redirect_to user_path(@user.id), notice: 'User was successfully created.'
     else
       render :signup_page, status: :unprocessable_entity

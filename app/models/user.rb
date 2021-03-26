@@ -7,7 +7,9 @@ class User
     other: 3
   }.freeze
 
-  attr_accessor :id, :name, :surname, :password_hash
+  QUERY_ATTRIBUTES = [:id, :name, :surname, :email, :gender, :age ]
+
+  attr_accessor :id, :name, :surname, :password_hash, :email
   attr_reader :errors, :gender, :age
 
   def initialize
