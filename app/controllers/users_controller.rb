@@ -2,20 +2,30 @@
 
 class UsersController < ApplicationController
 
-  # GET /users or /users.json
   def index
     @users = Database::Users::All.call
   end
 
-  # GET /users/1 or /users/1.json
   def show
     @user = Database::Users::Find.call(params[:id])
     head 404 unless @user
   end
 
-  # GET /signin
-  def signin
+  def signin_page
     @user = User.new
+  end
+
+  def signin
+    @user = Database::Users::FindBy.call(email: params[:email])
+    if CheckPasswordService.call(@user&.password_hash, params[:password])
+      self.current_user=@user
+      redirect_to user_path(@user.id), notice: 'User signed in.'
+    else
+      @error = 'Invalid email/password pair'
+      @user = User.new
+      @user.email = params[:email]
+      render :signin_page, status: :unprocessable_entity
+    end
   end
 
   def signup_page
@@ -27,7 +37,6 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  # POST /users or /users.json
   def signup
     @user = ::UserSignUpService.call(
       params[:email],

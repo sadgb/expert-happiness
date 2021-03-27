@@ -1,0 +1,25 @@
+<h1>Sign In</h1>
+
+<% if @error %>
+  <div class="alert alert-danger"><%= @error %></div>
+<% end %>
+
+<%= form_with(url: signin_path, local: true) do |form| %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, required: true, id: :user_email, value: @user&.email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password, required: true, id: :user_pwd %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>
+
+<%= link_to 'Back', root_path %>

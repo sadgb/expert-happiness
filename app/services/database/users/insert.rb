@@ -6,11 +6,12 @@ module Database
 
         DbConnection.execute do |client|
 
-          statement = client.prepare("insert into users (name, surname, age, pwd, gender, created_at, updated_at)
-values( ?, ?, ?, ?, ?, NOW(), NOW());")
+          statement = client.prepare("insert into users (name, surname, email, age, password_hash, gender, created_at, updated_at)
+values( ?, ?, ?, ?, ?, ?, NOW(), NOW());")
 
           statement.execute(user.name,
                             user.surname,
+                            user.email,
                             user.age,
                             user.password_hash,
                             user.gender
