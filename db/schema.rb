@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20210326122725) do
     t.integer "age"
     t.integer "gender"
     t.string "password_hash"
+    t.string "city"
+    t.text "about"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

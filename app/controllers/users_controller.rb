@@ -44,6 +44,8 @@ class UsersController < ApplicationController
       params[:surname],
       params[:gender],
       params[:age],
+      params[:city],
+      params[:about],
       params[:password]
     )
 

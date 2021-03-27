@@ -29,6 +29,16 @@
   </div>
 
   <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city, required: true, id: :user_city, value:@user&.city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :about %>
+    <%= form.text_area :about, required: true, id: :user_about, value:@user&.about %>
+  </div>
+
+  <div class="field">
     <%= form.label :age %>
     <%= form.number_field :age, required: true, id: :user_age, value:@user&.age %>
   </div>

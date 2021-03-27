@@ -12,6 +12,16 @@ class ValidateUserService
       user.errors << 'Email is invalid'
     end
 
+    city = user.city
+    if !city.blank? && city.length > 50
+      user.errors << 'City name is too long'
+    end
+
+    about = user.about
+    if !about.blank? && about.length > 150
+      user.errors << 'About is too long'
+    end
+
     name = user.name
     if name.blank? || name.length < 3 || name.length > 50
       user.errors << 'Name length should be between 3 and 50'

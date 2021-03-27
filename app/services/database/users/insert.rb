@@ -4,18 +4,15 @@ module Database
       # @param [User] user
       def self.call(user)
 
+        attrs = User::INSERT_ATTRIBUTES
+        params = attrs.collect{|attr| user.send attr}
+
         DbConnection.execute do |client|
 
-          statement = client.prepare("insert into users (name, surname, email, age, password_hash, gender, created_at, updated_at)
-values( ?, ?, ?, ?, ?, ?, NOW(), NOW());")
+          statement = client.prepare("insert into users (#{attrs.join(', ')}, created_at, updated_at)
+values( #{'?,' * attrs.length} NOW(), NOW());")
 
-          statement.execute(user.name,
-                            user.surname,
-                            user.email,
-                            user.age,
-                            user.password_hash,
-                            user.gender
-          )
+          statement.execute(*params)
 
           # this is last inserted id by our connection so this should work
           # regarding to stackoverflow

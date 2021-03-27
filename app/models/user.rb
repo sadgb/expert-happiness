@@ -7,10 +7,11 @@ class User
     other: 3
   }.freeze
 
-  QUERY_ATTRIBUTES = [:id, :name, :surname, :email, :gender, :age, :password_hash ]
+  INSERT_ATTRIBUTES = %i[name surname email gender age password_hash city about].freeze
+  QUERY_ATTRIBUTES = INSERT_ATTRIBUTES + %i[id updated_at created_at].freeze
 
-  attr_accessor :id, :name, :surname, :password_hash, :email
-  attr_reader :errors, :gender, :age
+  attr_accessor(*QUERY_ATTRIBUTES)
+  attr_reader :errors
 
   def initialize
     @errors = []
@@ -31,5 +32,4 @@ class User
   def age=(value)
     @age = value.to_i
   end
-
 end

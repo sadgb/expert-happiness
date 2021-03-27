@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ValidateUserService, type: :service do
 
-  let(:user) { u = User.new; u.age = 20; u.name = 'name1'; u.surname ='surname1'; u.gender = 2; u }
+  let(:user) { u = User.new; u.age = 20; u.email='test@test'; u.name = 'name1'; u.surname ='surname1'; u.gender = 2; u }
   subject { described_class.call(user) }
 
   context '#name_error' do
@@ -18,7 +18,7 @@ RSpec.describe ValidateUserService, type: :service do
     let(:user) { User.new }
     it do
       subject
-      expect(user.errors.count).to eq(4)
+      expect(user.errors.count).to eq(5)
     end
   end
 
