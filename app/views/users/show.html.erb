@@ -1,6 +1,17 @@
-
 <% if @user.id == current_user&.id %>
   <p> It's YOUR PAGE!</p>
+<% else %>
+  <% if Database::FriendRequests::Find.call(current_user.id, @user.id) %>
+    <% if Database::FriendRequests::Find.call( @user.id, current_user.id)  %>
+      <p>You are friends</p>
+      <%= link_to 'Remove friend', friend_requests_remove_path(user_id: @user.id), method: :post %>
+    <% else %>
+      <p>Friend request sent</p>
+      <%= link_to 'Remove request', friend_requests_remove_path(user_id: @user.id), method: :post %>
+    <% end %>
+  <% else %>
+    <%= link_to 'Add as friend', friend_requests_add_path(user_id: @user.id), method: :post %>
+  <% end %>
 <% end %>
 <p>
   <strong>Name:</strong>
