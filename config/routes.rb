@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  post 'friend_requests/add'
+  post 'friend_requests/remove'
+
   resources :users
   root to: 'visitors#index'
 
