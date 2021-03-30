@@ -15,21 +15,12 @@ class DbConnection
 
   def self.init_pool
     $db_pool = ConnectionPool.new(size: rails_config['pool'], timeout: 0) do
-      if rails_config['url']
-        Mysql2::Client.new(url: rails_config['url'],
-                           database: rails_config['database']
-        )
-
-      else
-        Mysql2::Client.new(host: rails_config['host'],
-                           username: rails_config['username'],
-
-                           port: rails_config['port'],
-                           database: rails_config['database'],
-                           password: rails_config['password'],
-        )
-      end
-
+      Mysql2::Client.new(host: rails_config['host'],
+                         username: rails_config['username'],
+                         port: rails_config['port'],
+                         database: rails_config['database'],
+                         password: rails_config['password'],
+      )
     end
   end
 end
