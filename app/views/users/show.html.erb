@@ -2,7 +2,7 @@
   <p> It's YOUR PAGE!</p>
 <% else %>
   <% if Database::FriendRequests::Find.call(current_user.id, @user.id) %>
-    <% if Database::FriendRequests::Find.call( @user.id, current_user.id)  %>
+    <% if Database::FriendRequests::Find.call(@user.id, current_user.id) %>
       <p>You are friends</p>
       <%= link_to 'Remove friend', friend_requests_remove_path(user_id: @user.id), method: :post %>
     <% else %>
@@ -41,6 +41,26 @@
 <p>
   <strong>About:</strong>
   <%= @user.about %>
+</p>
+
+
+<p>
+  <strong>Friends:</strong>
+  <% @friends = Database::Users::FindFriendsOf.call(@user.id) %>
+
+  <% if @friends.blank? %>
+    No friends =(
+  <% else %>
+  <ul>
+    <% @friends.each do |u| %>
+      <li>
+        <%= link_to "#{u.name} #{u.surname}", user_path(u.id) %>
+      </li>
+    <% end %>
+  </ul>
+
+<% end %>
+
 </p>
 
 <%= link_to 'Back', users_path %>
