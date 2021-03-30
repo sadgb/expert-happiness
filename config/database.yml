@@ -2,12 +2,12 @@
 default: &default
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("DATABASE_USERNAME") { 'root' } %>
+  host: <%= ENV.fetch("DATABASE_HOST") { 'localhost' } %>
   timeout: 5
 
 development:
   <<: *default
-  host:     localhost
-  username: root
   database: highload1_development
 
 # Warning: The database defined as "test" will be erased and
@@ -15,11 +15,9 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  host:     localhost
-  username: root
   database: highload1_test
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-  database: highload1_production
+  database: <%= ENV['DATABASE_NAME'] %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { '' } %>
