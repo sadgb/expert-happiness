@@ -16,6 +16,13 @@
 </header>
 <main role="main">
   <%= render 'layouts/messages' %>
+  <%= form_with url: search_users_path, method: :get, local: true  do |form| %>
+    <%= form.label :name_prefix, "name prefix:" %>
+    <%= form.text_field :name_prefix, value: params[:name_prefix] %>
+    <%= form.label :surname_prefix, "surname prefix:" %>
+    <%= form.text_field :surname_prefix, value: params[:surname_prefix] %>
+    <%= form.submit "Search" %>
+  <% end %>
   <%= yield %>
 </main>
 </body>

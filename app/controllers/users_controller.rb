@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate, only: [:index, :show]
+  before_action :authenticate, only: [:show]
+
+  def search
+    @users = Database::Users::SearchByNameSurname.call(params[:name_prefix], params[:surname_prefix])
+    render :index
+  end
 
   def index
     @users = Database::Users::All.call
