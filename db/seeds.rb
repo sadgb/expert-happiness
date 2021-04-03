@@ -1,7 +1,26 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+def insert_data
+  sql = String.new("
+    insert into users (name,surname,email, gender, age, city, created_at, updated_at) values
+")
+
+  x = []
+
+  puts Benchmark.ms {
+    1000.times do |i|
+      x << "('#{FFaker::Name.first_name}', '#{FFaker::Name.last_name.gsub("'", '')}', '#{FFaker::Internet.email}', #{[1,2,3].sample}, #{rand(20..120)}, '#{FFaker::Address.city.gsub("'", '') }',   now(), now())"
+    end
+  }
+
+  sql += x.join(",\n")
+
+  ActiveRecord::Base.connection.execute(sql)
+end
+
+
+
+ActiveRecord::Base.connection.execute("truncate table friend_requests;")
+ActiveRecord::Base.connection.execute("truncate table users;")
+
+1000.times do
+  insert_data
+end

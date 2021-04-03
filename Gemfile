@@ -25,7 +25,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-gem 'high_voltage'
+gem 'ffaker'
 gem 'jquery-rails'
 group :development do
   gem 'better_errors'
