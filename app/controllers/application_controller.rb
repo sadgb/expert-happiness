@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
+    return nil if cookies.signed[:user_id].to_i.zero?
+
     @current_user ||= Database::Users::Find.call(cookies.signed[:user_id])
   end
 
