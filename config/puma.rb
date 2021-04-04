@@ -48,6 +48,7 @@ preload_app!
 # cannot share connections between processes.
 #
 on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
   DbConnection.init_pool
 end
 

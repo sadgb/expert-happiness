@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   def search
     @users = Database::Users::SearchByNameSurname.call(params[:name_prefix], params[:surname_prefix])
     render :index
+  rescue => e
+    puts e.message
+    raise
   end
 
   def index

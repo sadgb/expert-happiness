@@ -8,19 +8,16 @@ module Database
         user_id = user_id.to_i
         return nil if user_id.negative?
 
-        DbConnection.execute do |client|
-          statement = client.prepare('select * from users where id = ?')
-          data = statement.execute(user_id).to_a.last
+        data = ActiveRecord::Base.connection.execute("select * from users where id = #{user_id}").to_a.last
 
-          return nil unless data
+        return nil unless data
 
-          user = User.new
-          User::QUERY_ATTRIBUTES.each do  |attr|
-            user.send "#{attr}=", data[attr.to_s]
-          end
-
-          user
+        user = User.new
+        User::QUERY_ATTRIBUTES.each_with_index do |attr, i|
+          user.send "#{attr}=", data[i]
         end
+
+        user
       end
     end
   end
