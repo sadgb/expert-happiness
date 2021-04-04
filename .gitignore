@@ -14,6 +14,8 @@
 /.bundle
 /vendor/bundle/
 /vendor/ruby/
+/public/assets/
+.yarn*
 
 # minimal Rails specific artifacts
 db/*.sqlite3
