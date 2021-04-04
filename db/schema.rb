@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210327154318) do
+ActiveRecord::Schema.define(version: 20210404134816) do
 
   create_table "friend_requests", primary_key: ["from_user_id", "to_user_id"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "from_user_id", null: false
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20210327154318) do
     t.text "about"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "surname"], name: "idx_name_surname5"
+    t.index ["name", "surname"], name: "idx_name_surname6", length: { name: 1, surname: 1 }
+    t.index ["surname", "name"], name: "idx_name_surname4"
   end
 
 end
