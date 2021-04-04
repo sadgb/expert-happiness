@@ -17,9 +17,7 @@ module Database
                          "where #{conditions.join(' AND ')}"
                        end
 
-          query = "select * from users #{conditions} order by id desc"
-
-          puts query
+          query = "select * from users #{conditions} order by id desc limit 10"
 
           data = client.query(query).to_a
 
