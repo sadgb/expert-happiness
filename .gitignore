@@ -84,3 +84,8 @@ pickle-email-*.html
 
 # tilde files are usually backup files from a text editor
 *~
+/1
+/10
+/100
+/1000
+/output.png
