@@ -19,10 +19,14 @@ module Database
         query = "select #{User::QUERY_ATTRIBUTES.join(',')} from users #{conditions} order by id desc limit 10"
 
         puts query
-        data = ActiveRecord::Base.connection.execute(query).to_a
+        DbConnection.replica_execute do |client|
+          statement = client.prepare(query)
+          data = statement.execute.to_a
 
-        data.collect do |user_hash|
-          MakeUserFromArray.call(user_hash)
+          data.collect do |user_hash|
+            MakeUserFromHash.call(user_hash)
+          end
+
         end
       end
     end

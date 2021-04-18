@@ -6,7 +6,7 @@ module Database
       def self.call(email: )
         return nil if email.blank?
 
-        DbConnection.execute do |client|
+        DbConnection.replica_execute do |client|
           statement = client.prepare('select * from users where lower(email) = ?')
           data = statement.execute(email.downcase).to_a.last
           MakeUserFromHash.call(data)
