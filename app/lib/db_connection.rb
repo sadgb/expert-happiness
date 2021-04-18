@@ -5,22 +5,15 @@ class DbConnection
     Rails.configuration.database_configuration[Rails.env]
   end
 
-  def self.execute
+  def self.execute(&block)
     raise unless block_given?
 
-    $db_pool.with do |conn|
-      yield conn
-    end
+    $db_pool.with(&block)
   end
 
   def self.init_pool
     $db_pool = ConnectionPool.new(size: rails_config['pool'], timeout: 0) do
-      Mysql2::Client.new(host: rails_config['host'],
-                         username: rails_config['username'],
-                         port: rails_config['port'],
-                         database: rails_config['database'],
-                         password: rails_config['password'],
-      )
+      Mysql2::Client.new(rails_config)
     end
   end
 end
