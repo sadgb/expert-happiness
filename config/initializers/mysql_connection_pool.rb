@@ -1,3 +1,4 @@
 
 
 DbConnection.init_pool
+DbConnection.init_replica_pool

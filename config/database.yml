@@ -7,6 +7,14 @@ default: &default
   host:  127.0.0.1
   port: 3307
   timeout: 5
+  replica:
+    adapter: mysql2
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    username: root
+    password: my_root_password
+    host:  127.0.0.1
+    port: 3308
+    timeout: 5
 
 development:
   <<: *default
