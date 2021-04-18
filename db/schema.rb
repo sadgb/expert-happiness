@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20210404134816) do
     t.text "about"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "surname"], name: "idx_name_surname5"
+    t.index ["name", "surname"], name: "idx_name_surname6", length: { name: 1, surname: 1 }
     t.index ["surname"], name: "idx_name_surname4"
   end
 
