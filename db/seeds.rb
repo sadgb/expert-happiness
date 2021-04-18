@@ -5,11 +5,11 @@ def insert_data
 
   x = []
 
-  puts Benchmark.ms {
-    1000.times do |i|
+  # Benchmark.ms {
+  # 1.times do |i|
       x << "('#{FFaker::Name.first_name}', '#{FFaker::Name.last_name.gsub("'", '')}', '#{FFaker::Internet.email}', #{[1,2,3].sample}, #{rand(20..120)}, '#{FFaker::Address.city.gsub("'", '') }',   now(), now())"
-    end
-  }
+  # end
+  #}
 
   sql += x.join(",\n")
 
@@ -21,6 +21,10 @@ end
 ActiveRecord::Base.connection.execute("truncate table friend_requests;")
 ActiveRecord::Base.connection.execute("truncate table users;")
 
-1000.times do
+counter = 0
+1_000_000.times do
   insert_data
+  counter += 1
+
+  puts "written #{counter}"
 end

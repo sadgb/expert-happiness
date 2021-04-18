@@ -1,0 +1,5 @@
+[mysqld]
+binlog_format=ROW
+enforce_gtid_consistency=on
+gtid-mode=on
+rpl_semi_sync_master_enabled=on

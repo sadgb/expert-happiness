@@ -7,22 +7,26 @@ services:
       - '3307:3306'
     volumes:
       - 'mysql_master_data:/bitnami/mysql/data'
+      - './my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro'
     environment:
       - MYSQL_REPLICATION_MODE=master
       - MYSQL_REPLICATION_USER=repl_user
       - MYSQL_USER=my_user
       - MYSQL_DATABASE=my_database
+      - BITNAMI_DEBUG=true
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_ROOT_PASSWORD=my_root_password
     healthcheck:
       test: ['CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh']
-      interval: 15s
+      interval: 35s
       timeout: 5s
       retries: 6
 
   mysql-slave:
     image: docker.io/bitnami/mysql:8.0
+    volumes:
+      - './my_custom_slave.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro'
     ports:
       - '3308:3306'
     depends_on:
@@ -31,6 +35,7 @@ services:
       - MYSQL_REPLICATION_MODE=slave
       - MYSQL_REPLICATION_USER=repl_user
       - MYSQL_USER=my_user
+      - BITNAMI_DEBUG=true
       - MYSQL_DATABASE=my_database
       - MYSQL_MASTER_HOST=mysql-master
       - MYSQL_MASTER_PORT_NUMBER=3306
@@ -39,7 +44,32 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     healthcheck:
       test: ['CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh']
-      interval: 15s
+      interval: 35s
+      timeout: 5s
+      retries: 6
+
+  mysql-slave-2:
+    image: docker.io/bitnami/mysql:8.0
+    volumes:
+      - './my_custom_slave.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro'
+    ports:
+      - '3309:3306'
+    depends_on:
+      - mysql-master
+    environment:
+      - MYSQL_REPLICATION_MODE=slave
+      - MYSQL_REPLICATION_USER=repl_user
+      - MYSQL_USER=my_user
+      - MYSQL_DATABASE=my_database
+      - MYSQL_MASTER_HOST=mysql-master
+      - BITNAMI_DEBUG=true
+      - MYSQL_MASTER_PORT_NUMBER=3306
+      - MYSQL_MASTER_ROOT_PASSWORD=my_root_password
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: [ 'CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh' ]
+      interval: 35s
       timeout: 5s
       retries: 6
 
