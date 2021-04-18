@@ -10,14 +10,7 @@ module Database
 
         data = ActiveRecord::Base.connection.execute("select * from users where id = #{user_id}").to_a.last
 
-        return nil unless data
-
-        user = User.new
-        User::QUERY_ATTRIBUTES.each_with_index do |attr, i|
-          user.send "#{attr}=", data[i]
-        end
-
-        user
+        MakeUserFromArray.call(data)
       end
     end
   end

@@ -16,11 +16,7 @@ where id in (
           data = statement.execute(user_id, user_id).to_a
 
           data.collect do |user_hash|
-            user = User.new
-            User::QUERY_ATTRIBUTES.each do  |attr|
-              user.send "#{attr}=", user_hash[attr.to_s]
-            end
-            user
+            MakeUserFromHash.call(user_hash)
           end
         end
       end
