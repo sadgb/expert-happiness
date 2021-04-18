@@ -22,11 +22,7 @@ module Database
         data = ActiveRecord::Base.connection.execute(query).to_a
 
         data.collect do |user_hash|
-          user = User.new
-          User::QUERY_ATTRIBUTES.each_with_index do |attr, i|
-            user.send "#{attr}=", user_hash[i]
-          end
-          user
+          MakeUserFromArray.call(user_hash)
         end
       end
     end
