@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   delete '/signout', to: 'users#signout', as: :signout
 
 
-  resources :users
+  resources :users do
+    member do
+      get :feed
+    end
+  end
   resources :posts
 end

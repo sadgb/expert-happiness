@@ -1,0 +1,26 @@
+
+<table class="table table-bordered">
+  <thead>
+  <th>#</th>
+  <th>Id</th>
+  <th>user Id</th>
+  <th>text</th>
+  <th>created_at</th>
+  </thead>
+  <tbody>
+  <% @posts.each_with_index do |post, i| %>
+    <tr>
+      <td> <%= i %></td>
+      <td> <%= post.id  %></td>
+      <td> <%= link_to "User #{post.user_id}", user_path(post.user_id)  %></td>
+      <td> <%= post.text[0..50]  %>...</td>
+      <td> <%= time_ago_in_words(post.created_at) %> ago</td>
+    </tr>
+
+  <% end %>
+
+
+  </tbody>
+
+
+</table>

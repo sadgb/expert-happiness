@@ -10,6 +10,10 @@ class UsersController < ApplicationController
     raise
   end
 
+  def feed
+    @posts = NewsFeed::GetFeedForUser.call(user_id: params[:id])
+  end
+
   def index
     @users = Database::Users::All.call
   end
