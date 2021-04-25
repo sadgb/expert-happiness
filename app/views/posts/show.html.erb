@@ -1,0 +1,8 @@
+
+
+<% Post::QUERY_ATTRIBUTES.each do |attr| %>
+  <p>
+    <strong><%= attr %>:</strong>
+    <%= @post.send attr %>
+  </p>
+<% end %>

@@ -1,18 +1,26 @@
-<% if @user.id == current_user&.id %>
-  <p> It's YOUR PAGE!</p>
-<% else %>
-  <% if Database::FriendRequests::Find.call(current_user.id, @user.id) %>
-    <% if Database::FriendRequests::Find.call(@user.id, current_user.id) %>
-      <p>You are friends</p>
-      <%= link_to 'Remove friend', friend_requests_remove_path(user_id: @user.id), method: :post %>
-    <% else %>
-      <p>Friend request sent</p>
-      <%= link_to 'Remove request', friend_requests_remove_path(user_id: @user.id), method: :post %>
-    <% end %>
+<% if current_user %>
+  <% if @user.id == current_user&.id %>
+    <p> It's YOUR PAGE!</p>
   <% else %>
-    <%= link_to 'Add as friend', friend_requests_add_path(user_id: @user.id), method: :post %>
+    <% if Database::FriendRequests::Find.call(current_user.id, @user.id) %>
+      <% if Database::FriendRequests::Find.call(@user.id, current_user.id) %>
+        <p>You are friends</p>
+        <%= link_to 'Remove friend', friend_requests_remove_path(user_id: @user.id), method: :post %>
+      <% else %>
+        <p>Friend request sent</p>
+        <%= link_to 'Remove request', friend_requests_remove_path(user_id: @user.id), method: :post %>
+      <% end %>
+    <% else %>
+      <%= link_to 'Add as friend', friend_requests_add_path(user_id: @user.id), method: :post %>
+    <% end %>
   <% end %>
 <% end %>
+<!--<p>-->
+<!--  <strong>Id:</strong>-->
+<%#= @user.id %>
+<!--</p>-->
+<br>
+
 <p>
   <strong>Name:</strong>
   <%= @user.name %>
@@ -51,16 +59,32 @@
   <% if @friends.blank? %>
     No friends =(
   <% else %>
+    <ul>
+      <% @friends.each do |u| %>
+        <li>
+          <%= link_to "#{u.name} #{u.surname}", user_path(u.id) %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</p>
+
+
+<p>
+  <strong>Posts:</strong>
+  <% @posts = Database::Posts::FindByUserId.call(user_id: @user.id) %>
+
+  <% if @posts.blank? %>
+    No posts =(
+  <% else %>
   <ul>
-    <% @friends.each do |u| %>
+    <% @posts.each do |u| %>
       <li>
-        <%= link_to "#{u.name} #{u.surname}", user_path(u.id) %>
+        <%= link_to "#{u.text[0..20]}... #{time_ago_in_words(u.created_at)} ago", post_path(u.id) %>
       </li>
     <% end %>
   </ul>
-
 <% end %>
-
 </p>
 
 <%= link_to 'Back', users_path %>
