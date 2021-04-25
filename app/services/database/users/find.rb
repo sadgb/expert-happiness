@@ -8,7 +8,7 @@ module Database
         user_id = user_id.to_i
         return nil if user_id.negative?
 
-        data = ActiveRecord::Base.connection.execute("select * from users where id = #{user_id}").to_a.last
+        data = ActiveRecord::Base.connection.execute("select #{User::QUERY_ATTRIBUTES_STRING} from users where id = #{user_id}").to_a.last
 
         MakeUserFromArray.call(data)
       end
