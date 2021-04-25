@@ -16,6 +16,8 @@
 /vendor/ruby/
 /public/assets/
 .yarn*
+/rabbitmq/data
+/rabbitmq/logs
 
 # minimal Rails specific artifacts
 db/*.sqlite3
