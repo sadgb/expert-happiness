@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.2'
 
-gem 'rails', '~> 5.1.1'
+gem 'rails', '~> 5.2.1'
 gem 'mysql2'
 gem 'bcrypt'
 gem 'puma', '~> 3.7'
@@ -11,6 +11,8 @@ gem 'connection_pool'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
+gem 'redis'
+gem 'hiredis'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 group :development, :test do
